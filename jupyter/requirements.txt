@@ -3,6 +3,7 @@ sentence-transformers
 ipywidgets
 langchain-text-splitters
 langchain-community
-vllm
 mistral_common
 langchain_mistralai
+transformers
+torch
