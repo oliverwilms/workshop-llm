@@ -13,42 +13,52 @@ You can find more in-depth information in https://learning.intersystems.com.
 # Setup
 Build the image we will use during the workshop:
 
-```console
-$ git clone https://github.com/intersystems-ib/workshop-llm
-$ cd workshop-llm
-$ docker-compose build
+Clone the repository:
+```bash
+git clone https://github.com/intersystems-ib/workshop-llm
+cd workshop-llm
 ```
 
-# Configuration
+Build the image:
+```bash
+docker compose build
+```
+
+Run the containers:
+```bash
+docker compose up -d
+```
+
+After running the containers, you should be able to access to:
+* InterSystems IRIS [Management Portal](http://localhost:52774/csp/sys/UtilHome.csp). You can login using `superuser` / `SYS`
+* [Jupyter Notebook](http://localhost:8888) 
+
+# RAG Application
 
 The main purpose of this example is to identify the main steps to create a RAG application using MISTRAL as LLM and IRIS as vector database to save and search the specific context.
 
-## **ATTENTION** Docker configuration
+## Create table for document & vector representation
 
-There is a known issue related to the permission request from Docker Desktop to access to the folders of the project, this permission has to be granted before to launch **docker-compose up -d**. To allow the file sharing in Docker Desktop you have to open settings option, select **Resources** and **File Sharing**, from that screen you have to include the path to the project, you can see here an example:
-![alt text](/images/fileSharing.png)
+First, you need to create the table where we will store document chunks and their vector embeddings.
 
-If you don't share this folder previously PostgreSQL database won't be initialized and the project will fail.
+Open IRIS [SQL Explorer](http://localhost:52774/csp/sys/exp/%25CSP.UI.Portal.SQL.Home.zen?$NAMESPACE=LLMRAG) in `LLMRAG` namespace:
 
-## Test Production 
-* Run the containers that we will use in the workshop:
+```sql
+CREATE TABLE LLMRAG.DOCUMENTCHUNK (
+    Document VARCHAR(500),
+    Phrase VARCHAR(1000), 
+    VectorizedPhrase VECTOR(DECIMAL, 384)
+)
 ```
-docker-compose build
 
-docker-compose up -d
-```
-Automatically an IRIS instance, will be deployed, a Jupyter Notebook is deployed under (http://localhost:8888) too.
-
-## IRIS database
-
-* Open the [Management Portal](http://localhost:52774/csp/sys/UtilHome.csp).
-* Login using the default `superuser`/ `SYS` account.
-* Open System Explorer --> SQL
-* Select NAMESPACE USER and Schema `Test`
+We could also do that directly from Python or connecting from SQL tools like DBeaver.
 
 # Testing with Jupyter Notebook
 
-This project is devolped in Python using Jupyter Notebook, you can access to it from [here](http://localhost:8888) and open LLMTests.ipnyb file.
+This project is devolped in Python using Jupyter Notebook, you can access to it from [Jupyter Notebook](http://localhost:8888), there you can find:
+* [LLMTest.ipynb](./jupyter/LLMTest.ipynb) - RAG example using [MistralAI](https://mistral.ai) LLM 
+* [LLMLocal.ipynb](./jupyter/LLMLocal.ipynb) - RAG example using a local LLM
+
 ![alt text](/images/jupyter.png)
 
 You can test the project step by step or execute it at one time, feel free.
