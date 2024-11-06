@@ -16,3 +16,6 @@
 
     // install some sample data (Holefoods, etc.)
     zpm "install samples-bi"
+
+    // load some modifications on Holefoods (e.g. ForeignKeys, etc.)
+    do $SYSTEM.OBJ.LoadDir("/opt/irisapp/src/HoleFoods/", "ck", ,1)
