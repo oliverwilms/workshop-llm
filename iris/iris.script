@@ -1,0 +1,18 @@
+
+    // unexpire default passwords
+    set $namespace = "%SYS"
+    do ##class(Security.Users).UnExpireUserPasswords("*")
+    
+    // create namespace
+    do $SYSTEM.OBJ.Load("/opt/irisapp/src/LLMRAG/Installer.cls", "ck")
+    do ##class(LLMRAG.Installer).Install()
+    
+    // import source code & schemas
+    set $namespace="LLMRAG"
+    do $SYSTEM.SQL.Schema.ImportDDL("/opt/irisapp/sql/dump.sql",,"IRIS")
+
+    // install zpm
+    s r=##class(%Net.HttpRequest).%New(),r.Server="pm.community.intersystems.com",r.SSLConfiguration="ISC.FeatureTracker.SSL.Config" d r.Get("/packages/zpm/latest/installer"),$system.OBJ.LoadStream(r.HttpResponse.Data,"c")
+
+    // install some sample data (Holefoods, etc.)
+    zpm "install samples-bi"

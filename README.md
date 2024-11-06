@@ -1,8 +1,11 @@
 # workshop-llm
-Workshop to create a RAG application to use LLM models. This workshop is developed in Python using Jupyter Notebook connected using the official libraries to IRIS.
+Workshop to create a RAG application using LLM models. 
+
+This workshop is developed in Python 🐍 (Jupyter Notebook) and InterSystems IRIS.
+
+The main purpose is to show you the main steps to create a RAG application using an LLM and a vector database.
 
 You can find more in-depth information in https://learning.intersystems.com.
-
 
 # What do you need to install? 
 * [Git](https://git-scm.com/downloads) 
@@ -35,29 +38,15 @@ After running the containers, you should be able to access to:
 
 # RAG Application
 
-The main purpose of this example is to identify the main steps to create a RAG application using MISTRAL as LLM and IRIS as vector database to save and search the specific context.
+## Medicine Leaflet examples
 
-## Create table for document & vector representation
+You have some medicine leaflets (in spanish) in [./data](./data).
 
-First, you need to create the table where we will store document chunks and their vector embeddings.
+This example is about creating a RAG Q&A application that can answer questions about those medicine leaflets.
 
-Open IRIS [SQL Explorer](http://localhost:52774/csp/sys/exp/%25CSP.UI.Portal.SQL.Home.zen?$NAMESPACE=LLMRAG) in `LLMRAG` namespace:
-
-```sql
-CREATE TABLE LLMRAG.DOCUMENTCHUNK (
-    Document VARCHAR(500),
-    Phrase VARCHAR(1000), 
-    VectorizedPhrase VECTOR(DECIMAL, 384)
-)
-```
-
-We could also do that directly from Python or connecting from SQL tools like DBeaver.
-
-# Testing with Jupyter Notebook
-
-This project is devolped in Python using Jupyter Notebook, you can access to it from [Jupyter Notebook](http://localhost:8888), there you can find:
-* [LLMTest.ipynb](./jupyter/LLMTest.ipynb) - RAG example using [MistralAI](https://mistral.ai) LLM 
-* [LLMLocal.ipynb](./jupyter/LLMLocal.ipynb) - RAG example using a local LLM
+Open [Jupyter Notebook](http://localhost:8888), there you can find:
+* [LLMTest.ipynb](./jupyter/QA-PDF-MistralAI.ipynb) - RAG example using [MistralAI](https://mistral.ai) LLM 
+* [LLMLocal.ipynb](./jupyter/QA-PDF-Local.ipynb) - RAG example using a local LLM
 
 ![alt text](/images/jupyter.png)
 
