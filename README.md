@@ -46,7 +46,7 @@ This example is about creating a RAG Q&A application that can answer questions a
 
 Open [Jupyter Notebook](http://localhost:8888), there you can find:
 * [QA-PDF-LLM.ipynb](./jupyter/QA-PDF-LLM.ipynb) - RAG example using [MistralAI](https://mistral.ai) LLM 
-* [QA-PDF-LLM.ipynb](./jupyter/QA-PDF-LLM.ipynb) - RAG example using a local LLM
+* [QA-PDF-Local.ipynb](./jupyter/QA-PDF-Local.ipynb) - RAG example using a local LLM
 
 ![alt text](/images/jupyter.png)
 
