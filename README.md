@@ -36,7 +36,7 @@ After running the containers, you should be able to access to:
 * InterSystems IRIS [Management Portal](http://localhost:52774/csp/sys/UtilHome.csp). You can login using `superuser` / `SYS`
 * [Jupyter Notebook](http://localhost:8888) 
 
-# RAG Application
+# Explore RAG applications using Jupyter
 
 ## Medicine Leaflet examples
 
@@ -60,3 +60,53 @@ Using the sales data model of the company, the goal is to create an assistant th
 
 In [Jupyter Notebook](http://localhost:8888), you will find:
 * [QA-SQL-LLM.ipynb](./jupyter/QA-SQL-LLM.ipynb) - text to SQL example using OpenAI LLM.
+
+# Create other applications
+
+There are some other examples you can try to build and modify in your local environment.
+
+First of all, create a new environment and install some requirements:
+
+```bash
+# create a local venv environment
+python3 -m venv .venv
+
+# activate venv
+source .venv/bin/activate
+
+# install dependencies
+pip3 install -r requirements.txt
+```
+
+Create an `.env` file for storing API keys for OpenAI / MistralAI. They will be used in the applications.
+
+```
+OPENAI_API_KEY="your-api"
+MISTRAL_API_KEY="your-api"
+```
+
+## Text to SQL service API 
+You can find a sample Text to SQL based on [QA-SQL-LLM.ipynb](./jupyter/QA-SQL-LLM.ipynb) [here](python/holefoods_text2sql/main.py).
+
+You can run it like this:
+
+```bash
+cd python/holefoods_text2sql
+fastapi dev main.py
+```
+
+Then open http://127.0.0.1:8000/docs to explore the API and try it out using the web client.
+
+## Streamlit Assistant
+There is also a great example of a langchain / streamlit chatbot assitant in https://alejandro-ao.com/how-to-use-streaming-in-langchain-and-streamlit/
+
+You can play with it here as well:
+
+```bash
+cd python/assitant
+streamlit run chatbot.py
+```
+
+Then open http://localhost:8501 and have a look at it.
+
+Are you able to add the logic to reproduce the Medicine Leaflet example in the assitant ?
