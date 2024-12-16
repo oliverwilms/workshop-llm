@@ -1,8 +1,11 @@
 # workshop-llm
-Workshop to create a RAG application to use LLM models. This workshop is developed in Python using Jupyter Notebook connected using the official libraries to IRIS.
+Workshop to create a RAG application using LLM models. 
+
+This workshop is developed in Python 🐍 (Jupyter Notebook) and InterSystems IRIS.
+
+The main purpose is to show you the main steps to create a RAG application using an LLM and a vector database.
 
 You can find more in-depth information in https://learning.intersystems.com.
-
 
 # What do you need to install? 
 * [Git](https://git-scm.com/downloads) 
@@ -13,42 +16,97 @@ You can find more in-depth information in https://learning.intersystems.com.
 # Setup
 Build the image we will use during the workshop:
 
-```console
-$ git clone https://github.com/intersystems-ib/workshop-llm
-$ cd workshop-llm
-$ docker-compose build
+Clone the repository:
+```bash
+git clone https://github.com/intersystems-ib/workshop-llm
+cd workshop-llm
 ```
 
-# Configuration
-
-The main purpose of this example is to identify the main steps to create a RAG application using MISTRAL as LLM and IRIS as vector database to save and search the specific context.
-
-## **ATTENTION** Docker configuration
-
-There is a known issue related to the permission request from Docker Desktop to access to the folders of the project, this permission has to be granted before to launch **docker-compose up -d**. To allow the file sharing in Docker Desktop you have to open settings option, select **Resources** and **File Sharing**, from that screen you have to include the path to the project, you can see here an example:
-![alt text](/images/fileSharing.png)
-
-If you don't share this folder previously PostgreSQL database won't be initialized and the project will fail.
-
-## Test Production 
-* Run the containers that we will use in the workshop:
+Build the image:
+```bash
+docker compose build
 ```
-docker-compose build
 
-docker-compose up -d
+Run the containers:
+```bash
+docker compose up -d
 ```
-Automatically an IRIS instance, will be deployed, a Jupyter Notebook is deployed under (http://localhost:8888) too.
 
-## IRIS database
+After running the containers, you should be able to access to:
+* InterSystems IRIS [Management Portal](http://localhost:52774/csp/sys/UtilHome.csp). You can login using `superuser` / `SYS`
+* [Jupyter Notebook](http://localhost:8888) 
 
-* Open the [Management Portal](http://localhost:52774/csp/sys/UtilHome.csp).
-* Login using the default `superuser`/ `SYS` account.
-* Open System Explorer --> SQL
-* Select NAMESPACE USER and Schema `Test`
+# Explore RAG applications using Jupyter
 
-# Testing with Jupyter Notebook
+## Medicine Leaflet examples
 
-This project is devolped in Python using Jupyter Notebook, you can access to it from [here](http://localhost:8888) and open LLMTests.ipnyb file.
+You have some medicine leaflets (in spanish) in [./data](./data).
+
+This example is about creating a RAG Q&A application that can answer questions about those medicine leaflets.
+
+Open [Jupyter Notebook](http://localhost:8888), there you can find:
+* [QA-PDF-LLM.ipynb](./jupyter/QA-PDF-LLM.ipynb) - RAG example using [MistralAI](https://mistral.ai) LLM 
+* [QA-PDF-Local.ipynb](./jupyter/QA-PDF-Local.ipynb) - RAG example using a local LLM
+
 ![alt text](/images/jupyter.png)
 
 You can test the project step by step or execute it at one time, feel free.
+
+## Hoolefoods data model text to SQL
+
+This example is about a company called Holefoods that sells food with some hole on it :)
+
+Using the sales data model of the company, the goal is to create an assistant that can translate natural language questions into valid SQL that answer the question.
+
+In [Jupyter Notebook](http://localhost:8888), you will find:
+* [QA-SQL-LLM.ipynb](./jupyter/QA-SQL-LLM.ipynb) - text to SQL example using OpenAI LLM.
+
+# Create other applications
+
+There are some other examples you can try to build and modify in your local environment.
+
+First of all, create a new environment and install some requirements:
+
+```bash
+# create a local venv environment
+python3 -m venv .venv
+
+# activate venv
+source .venv/bin/activate
+
+# install dependencies
+pip3 install -r requirements.txt
+```
+
+Create an `.env` file for storing API keys for OpenAI / MistralAI. They will be used in the applications.
+
+```
+OPENAI_API_KEY="your-api"
+MISTRAL_API_KEY="your-api"
+```
+
+## Text to SQL service API 
+You can find a sample Text to SQL based on [QA-SQL-LLM.ipynb](./jupyter/QA-SQL-LLM.ipynb) [here](python/holefoods_text2sql/main.py).
+
+You can run it like this:
+
+```bash
+cd python/holefoods_text2sql
+fastapi dev main.py
+```
+
+Then open http://127.0.0.1:8000/docs to explore the API and try it out using the web client.
+
+## Streamlit Assistant
+There is also a great example of a langchain / streamlit chatbot assitant in https://alejandro-ao.com/how-to-use-streaming-in-langchain-and-streamlit/
+
+You can play with it here as well:
+
+```bash
+cd python/assitant
+streamlit run chatbot.py
+```
+
+Then open http://localhost:8501 and have a look at it.
+
+Are you able to add the logic to reproduce the Medicine Leaflet example in the assitant ?
