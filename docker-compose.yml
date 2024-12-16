@@ -11,7 +11,7 @@ services:
       - 52774:52773
       - 51774:1972
     volumes:
-    - ./shared:/shared
+    - ./iris/shared:/shared
     environment:
     - ISC_DATA_DIRECTORY=/shared/durable
     command: --check-caps false --ISCAgent false
