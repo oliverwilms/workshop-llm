@@ -65,14 +65,20 @@ In [Jupyter Notebook](http://localhost:8888), you will find:
 
 There are some other examples you can try to build and modify in your local environment.
 
-First of all, create a new environment and install some requirements:
+First of all, go to the folder ./python and create a new environment and install some requirements:
 
 ```bash
 # create a local venv environment
+# ... for Mac or Linux users
 python3 -m venv .venv
+# ... for Windows users
+python -m venv .venv
 
 # activate venv
+# ... for Mac or Linux users
 source .venv/bin/activate
+# ... for Windows users
+./venv/Scripts/Activate.ps1
 
 # install dependencies
 pip3 install -r requirements.txt
